@@ -6,6 +6,7 @@ RAWNAME=$(ls -1 | head -n 1)
 mv $PWD/$RAWNAME $PWD/archive
 
 LIST=$(cat $PWD/archive/$LISTNAME)
+FILEID=$(date +%H%M%S)
 NUM=0
 
 #TODO: implement a switch for other VPNs
@@ -16,12 +17,12 @@ for VAL in $LIST; do
 	URL="www.blockchain.com/btc/address/$VAL"
 	RES=$(w3m -dump $URL | grep "value" | awk {'print($9)'})
 	echo "Result for $URL: $RES"
-	echo "Result for $VAL: $RES" >> $PWD/archive/$RESULT.result
+	echo "Result for $VAL: $RES" >> $FILEID.result
 
 	if [ $NUM -eq $2 ];then
 		nordvpn d
-		nordvpn connect Asia_Pacific
-		#change to your nearest geolocation
+		timeout 20 nordvpn connect Asia_Pacific || nordvpn c
+		 #change to your nearest geolocation
 		let "NUM=0"
 	fi
 
