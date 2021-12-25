@@ -1,0 +1,52 @@
+#!/bin/bash
+
+FILEID=$(date +%H%M%S)
+RAWFILE="$FILEID.raw"
+LISTNAME="$FILEID.list"
+CORE_NUM=$(lscpu | grep socket | awk {'print($4)'})
+
+case $3 in
+
+	legacy)
+	TYPE="1*"
+	SWITCH="-b -c"
+	;;
+
+	segwit)
+	TYPE="3*"
+	SWITCH=""
+	;;
+
+	native)
+	TYPE="bc1q*"
+	SWITCH=""
+	;;
+
+	*)
+	cat $PWD/usage/gen-list.usage
+	exit 1
+esac
+
+case $1 in
+
+	cpu | CPU)
+	echo -n "Executing CPU-only address search"
+	echo " "
+	timeout $2 ./vscpu -t $CORE_NUM $SWITCH -o ./$RAWFILE $TYPE
+	;;
+
+	gpu | GPU)
+	echo -n "CUDA GPU address search not implemented yet"
+	#echo -n "Executing CUDA GPU address search"
+	;;
+
+	*)
+	cat $PWD/usage/gen-list.usage
+	exit 1
+	;;
+esac
+
+LINES=$(cat $RAWFILE | grep "PubAddress" | wc -l)
+
+echo "VanitySearch ran for $2 seconds generating $LINES addresses"
+cat $RAWFILE | grep "PubAddress" | awk {'print($2)'} > $LISTNAME

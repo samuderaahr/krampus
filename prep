@@ -1,0 +1,19 @@
+sudo apt install -y w3m busybox
+#TODO: implement check on NordVPN installation
+
+DIR="/media/krampus"
+
+if [ -d "$DIR" ]; then
+	echo "Directory exists, unmounting.."
+        sudo umount -l $DIR
+        sudo umount -f $DIR
+	sudo rm -rf $DIR
+fi
+
+echo "Creating directory in $DIR"
+mkdir $DIR
+sudo mount -t tmpfs -o rw,size=500M tmpfs $DIR
+
+cp -r * $DIR
+sudo chown -R sam:sam $DIR
+sudo chmod -R 755 $DIR

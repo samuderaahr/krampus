@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DIR="/media/krampus"
+
+if [ -d "$DIR" ]; then
+	echo "Unmounting $DIR"
+	sudo umount -l $DIR
+	sudo umount -f $DIR
+	sudo rmdir /media/krampus
+else
+	echo "Error. $DIR already unmounted"
+fi

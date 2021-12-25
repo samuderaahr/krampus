@@ -1,0 +1,8 @@
+
+Consumes the top-most (i.e. ls-wise) address list ($DATE.list) on the same directory, dump them into a blockchain explorer, and find out their remaining BTC
+
+Usage	: krampus <query delay (microsec)> <# of address before VPN switch>
+
+Notes	: 
+- It uses w3m CLI browser to render blockchain.info/blockchain.com explorer page, which has a cloudflare temporary rate limiter which necessitate VPN switchover to different address 
+- Currently the only implemented VPN is NordVPN

@@ -1,0 +1,9 @@
+
+Generates a literally huge list of Bitcoin Addresses i.e. RIPEMD160 of the SHA-256 of the Priv Key
+
+Usage	: gen-list (cpu|gpu) <run-time (s)> (legacy|segwit|native)
+
+Notes	: 
+- Number of addresses generated depends on CPU count and speed (about 40-45k addresses/sec on an old i7-3720QM laptop)
+- GPU address generation is not implemented yet, but CPU generation should still be fast enough for all practical purposes
+
