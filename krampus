@@ -16,8 +16,8 @@ for VAL in $LIST; do
 	let "NUM+=1"
 	URL="www.blockchain.com/btc/address/$VAL"
 	RES=$(w3m -dump $URL | grep "value" | awk {'print($9)'})
-	echo "Result for $URL: $RES"
-	echo "Result for $VAL: $RES" >> $FILEID.result
+	echo "$URL = $RES"
+	echo "$VAL = $RES" >> $FILEID.result
 
 	if [ $NUM -eq $2 ];then
 		nordvpn d
